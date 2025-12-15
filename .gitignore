@@ -1,0 +1,5 @@
+typing_practice.txt
+
+# ログなども無視
+typing_log.csv
+__pycache__/
