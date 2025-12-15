@@ -3,6 +3,7 @@ import datetime
 import os
 import csv
 import sys
+import shutil
 
 # OS判定
 IS_WINDOWS = (os.name == 'nt')
@@ -16,8 +17,22 @@ else:
 # スクリプトファイル(.py)が存在するディレクトリの絶対パスを取得
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# ファイルパスを BASE_DIR 基準で結合
-INPUT_FILE = os.path.join(BASE_DIR, 'typing_practice.txt')
+REAL_FILE = os.path.join(BASE_DIR, 'typing_practice.txt')
+SAMPLE_FILE = os.path.join(BASE_DIR, 'typing_practice_sample.txt')
+OUTPUT_FILE = os.path.join(BASE_DIR, 'typing_log.csv')
+
+# ユーザー用のファイルが存在せず、かつサンプルがある場合はコピーを作成
+if not os.path.exists(REAL_FILE) and os.path.exists(SAMPLE_FILE):
+    try:
+        shutil.copy(SAMPLE_FILE, REAL_FILE)
+        print(f"初回セットアップ")
+        print(f" {SAMPLE_FILE} をコピーして{REAL_FILE} を作成しました。")
+        time.sleep(1)
+    except Exception as e:
+        print(f"セットアップエラー: {e}")
+
+# 読み込むファイルは常に REAL_FILEsにする
+INPUT_FILE = REAL_FILE
 OUTPUT_FILE = os.path.join(BASE_DIR, 'typing_log.csv')
 
 CONTEXT_LINES = 3

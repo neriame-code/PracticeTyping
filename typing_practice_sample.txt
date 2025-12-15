@@ -1,0 +1,49 @@
+# ※ これは見本ファイルです。編集せず、自動生成される typing_practice.txt を編集してください。
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+class DailyTraining {
+public:
+    int AlphaValue;
+    int BetaValue;
+    vector<int> DataList;
+
+    DailyTraining(int a, int b) {
+        this->AlphaValue = a;
+        this->BetaValue = b;
+    }
+
+    void CalculateScore(int limit) {
+        int score = 0;
+        int max_val = 100;
+
+        for (int i = 0; i < limit; ++i) {
+            
+            if (DataList[i] != 0 && score <= max_val) {
+                score += (AlphaValue * i) - (BetaValue / 2);
+                string message = "Current Score: " + to_string(score);
+                cout << message << endl;
+            }
+            else {
+                bool is_valid = (score > 0) || (limit < 10);
+                if (!is_valid) break; 
+            }
+        }
+    }
+};
+
+int main() {
+    int input_n = 10;
+
+    DailyTraining* trainer = new DailyTraining(10, 20);
+    
+    trainer->DataList.resize(input_n);
+    trainer->CalculateScore(input_n);
+
+    delete trainer;
+    return 0;
+}
